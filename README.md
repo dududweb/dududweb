@@ -4,6 +4,7 @@
 ![Javascript Badge](https://img.shields.io/badge/-JavaScript-yellow)
 ![Typescript Badge](https://img.shields.io/badge/-TypeScript-blue)
 ![React Badge](https://img.shields.io/badge/-React-9cf)
+![Next Badge](https://img.shields.io/badge/-Next-333)
 <!--
 **dududweb/dududweb** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
