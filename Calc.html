@@ -1,0 +1,386 @@
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+
+
+
+
+    function b() {
+      var width;
+      var height;
+      var size; //기준사이즈
+      var loss = 1.15; //로스율 %
+      var margin = 1.2 //마진
+      var multi //배수	
+
+      width = Number(document.getElementById("width1").value);
+      height = Number(document.getElementById("height1").value);
+
+      if (width > 39 && height > 39) { // 1자리 올림
+        width = Math.ceil(width / 10) * 10;;
+        height = Math.ceil(height / 10) * 10;;
+      }
+
+      if (height > 120 && width > 120) {
+        alert("가로 120 세로 300까지 입력 가능합니다.");
+        document.getElementById("width1").value = 120;
+      }
+
+      if (width < height) { size = width; } else { size = height; } // 기준 사이즈 결정	
+
+
+      switch (true) {
+        case (size < 40 && width > 9 && height > 9):
+          //alert("최소 사이즈는 40cm입니다.");   
+          return 0;
+          break;
+        case (size > 39 && size < 50):
+          size = 40;
+          multi = 2.491;
+          break;
+        case (size < 60):
+          size = 50;
+          multi = 2.029;
+          break;
+        case (size < 70):
+          size = 60;
+          multi = 1.8116;
+          break;
+        case (size < 80):
+          size = 70;
+          multi = 1.6563;
+          break;
+        case (size < 90):
+          size = 80;
+          multi = 1.5399;
+          break;
+        case (size < 100):
+          size = 90;
+          multi = 1.5298;
+          break;
+        case (size < 110):
+          size = 100;
+          multi = 1.8116;
+          break;
+        case (size < 120):
+          size = 110;
+          multi = 1.7128;
+          break;
+        case (size < 130):
+          size = 120;
+          multi = 1.57007;
+        default:
+          size = 120;
+          multi = 1.57007;
+      }
+
+      //alert(width + "/" + height + "/" + size);
+
+      var amount = width * height * multi * loss * margin;
+
+      amount = Math.ceil(amount / 100) * 100; //올림
+      //amount = Math.floor(amount/100)*100; //버림
+      //amount = Math.round(amount/100)*100; //반올림
+
+      var amount_1_45 = Math.ceil(amount * 1.45 / 100) * 100;
+      var amount_1_45_0_95 = Math.ceil(amount_1_45 * 0.95 / 100) * 100;
+      var amount_1_45_1_5 = Math.ceil(amount_1_45 * 1.5 / 100) * 100;
+      var amount_0_8 = Math.ceil(amount * 0.8 / 100) * 100;
+
+
+      var last_amount = amount;  //최종금액	
+      var last_amount_1_45 = amount_1_45;
+      var last_amount_1_45_0_95 = amount_1_45_0_95;
+      var last_amount_1_45_1_5 = amount_1_45_1_5;
+      var last_amount_0_8 = amount_0_8;
+
+
+      var last_cnt = Math.round(last_amount / 1000); // 구매수량
+      var last_cnt_1_45 = Math.round(last_amount_1_45 / 1000);
+      var last_cnt_1_45_0_95 = Math.round(last_amount_1_45_0_95 / 1000);
+      var last_cnt_1_45_1_5 = Math.round(last_amount_1_45_1_5 / 1000);
+      var last_cnt_0_8 = Math.round(last_amount_0_8 / 1000);
+
+      /*
+      벨크로우레탄 - 벨크로pvc 대비 70% 상승
+      자석방풍막 0.5T - 벨크로pvc 대비 70%상승
+      자석방풍막 1T - 자석방풍막 0.5T 대비 60%상승
+      자석방풍막 2T - 자석방풍막 0.5T 대비 120% 상승
+      PVC 비닐만구매 - 벨크로pvc 대비 20% 감소
+      우레탄비닐만구매 - 벨크로pvc대비 20% 감소	
+      */
+
+
+      if (width > 39 && height > 39) {
+        document.getElementById("result_data").style.display = "";
+        document.getElementById("result_data_none").style.display = "none";
+
+        //일반2mm
+        document.getElementById("data_1_2").innerHTML = last_amount.toLocaleString();// +" "+ width +" "+ height +" "+ multi +" "+ loss +" "+ margin;
+        //document.getElementById("data_1_2").innerHTML = last_amount +" "+ width +" "+ height +" "+ multi +" "+ loss +" "+ margin+" "+ size;
+        document.getElementById("data_1_1").innerHTML = last_cnt;
+
+        //일반3mm
+        document.getElementById("data_2_2").innerHTML = last_amount_1_45.toLocaleString();
+        document.getElementById("data_2_1").innerHTML = last_cnt_1_45;
+
+        //항균2mm
+        document.getElementById("data_3_2").innerHTML = last_amount_1_45_0_95.toLocaleString();
+        document.getElementById("data_3_1").innerHTML = last_cnt_1_45_0_95;
+
+        //항균3mm
+        document.getElementById("data_4_2").innerHTML = last_amount_1_45_1_5.toLocaleString();
+        document.getElementById("data_4_1").innerHTML = last_cnt_1_45_1_5;
+
+      } else {
+        document.getElementById("result_data").style.display = "none";
+        document.getElementById("result_data_none").style.display = "";
+        document.getElementById("result_data_none").innerHTML = "가로 세로 모두 40 이상 입력하세요.";
+
+      }
+    }
+
+
+
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&family=Noto+Sans+KR:wght@400;700;900&display=swap"
+    rel="stylesheet">
+</head>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0 5px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+
+  #data_1_1,
+  #data_1_2,
+  #data_2_1,
+  #data_2_2,
+  #data_3_1,
+  #data_3_2,
+  #data_4_1,
+  #data_4_2 {
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    text-align: center;
+  }
+
+  p {
+    display: block;
+  }
+
+  .result_data_none {
+    position: absolute;
+    margin-top: 250px;
+    width: 100%;
+    background-color: #FFF;
+    font-size: 30px;
+    text-align: center;
+    color: red;
+    min-height: 100px;
+    padding-top: 50px;
+    padding: 50px 15px;
+    border: solid 2px #666;
+    box-sizing: border-box;
+  }
+
+  .result_data {
+    width: 100%;
+    display: none;
+  }
+
+  .result_data li {
+    display: flex;
+    list-style: none;
+    height: 42px;
+  }
+
+  .result_data p {
+    text-align: center;
+    width: 30%;
+    margin-top: 9px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .table_head {
+    font-weight: 600;
+  }
+
+  .tableHead {
+    font-weight: bold;
+    color: #000;
+    background-color: #e5e5e5;
+
+  }
+
+  .pointWrap {
+    display: flex;
+    gap: 10px;
+    color: #ff7271;
+    position: absolute;
+    right: 15px;
+    top: -30px;
+  }
+
+  table tr td:nth-child(3) {
+    text-align: right;
+  }
+
+  table tr td:nth-child(4) {
+    text-align: right;
+  }
+
+  h3 {
+    font-weight: 400;
+  }
+</style>
+
+
+<body>
+  <div style="background-color: #f9f4ee; height: 100%;">
+    <!-- <img src="https://cleanfive1.godohosting.com/mijee/yh/sss2.jpg"
+    style="position:absolute; width: 100%; max-width:700px; margin:0 auto;"> -->
+    <!-- <div style="max-width: 500px;">
+    <input type="text" id="width1" onkeyup="b()"
+      style="position:absolute;margin-top:130px;width:20%;height:45px;margin-left:30%;font-size:30px;text-align:center;">
+    <input type="text" id="height1" onkeyup="b()"
+      style="position:absolute;margin-top:130px;width:20%;height:45px;margin-left:60%;font-size:30px;text-align:center;">
+  </div> -->
+    <div id="result_data_none" class="result_data_none" style="display:none">
+
+    </div>
+
+    <div style="background-color: #333; padding: 20px 5px; margin-bottom: 50px;">
+      <h1 style="text-align:center; color:#fff; ">주문방법 자동견적기</h1>
+    </div>
+    <div class="inputWrapper"
+      style="max-width:500px; margin: 0 auto; gap:5px; display:flex; justify-content:space-between; align-items: center;">
+      <div style="background: #666; color:#fff; padding: 13px 5px;"><span> 가로(cm)</span></div>
+      <input type="text" id="width1" onkeyup="b()"
+        style="width:28%; border:1px solid #000; font-size:30px; text-align:center; height:45px;">
+      <span>X</span>
+      <div style="background: #666; color:#fff; padding: 13px 5px;"><span>세로(cm)</span></div>
+      <input type="text" id="height1" onkeyup="b()"
+        style="width:28%; border:1px solid #000; font-size:30px; text-align:center; height:45px;">
+    </div>
+    <h3 style="text-align: center;  margin-bottom: 100px;">사이즈를 입력해주세요.(단위cm)</h3>
+
+    <table style=" border-radius: 40px; margin-bottom: 50px;">
+      <div id="result_data" class="result_data">
+        <ul>
+          <li class="table_head" style="display:none">
+            <p><!-- 옵션 --></p>
+            <p>최종금액</p>
+            <p style="position: relative;">구매수량</p>
+          </li>
+          <li>
+            <p style="width:500px;"><!-- 벨크로PVC --></p>
+            <!-- <p id="data_1_1">0</p> -->
+            <!-- <p id="data_1_2">0</p> -->
+          </li>
+          <li>
+            <p style="width:500px;"><!-- 벨크로 우레탄 --></p>
+            <!-- <p id="data_2_1">0</p> -->
+            <!-- <p id="data_2_2">0</p> -->
+          </li>
+          <li>
+            <p style="width:500px;"><!-- PVC 비닐만 구매 --></p>
+            <!-- <p id="data_6_1">0</p> -->
+            <!-- <p id="data_6_2">0</p> -->
+          </li>
+        </ul>
+      </div>
+      <tr>
+        <th class="tableHead">종류</th>
+        <th class="tableHead" colspan="2">두께</th>
+        <th class="tableHead" style="border: 6px solid red;
+        border-bottom: none;">구매수량</th>
+        <th class="tableHead">총 금액</th>
+      </tr>
+      <tr>
+        <td class="tableHead" rowspan="2">일반 그린매트</td>
+        <td colspan="2">약 2mm</td>
+        <!-- 벨크로PVC -->
+        <td style="border: 6px solid red;
+        border-top: 1px solid;
+        border-bottom: 1px solid;"><span id="data_1_1"></span>개</td>
+        <td><span id="data_1_2"></span>원</td>
+      </tr>
+      <tr>
+        <td colspan="2">약 3mm</td>
+        <!-- 벨크로 TPU -->
+        <td style="border: 6px solid red;
+        border-top: none;
+        border-bottom: 1px solid; text-align: right;"><span id="data_2_1"></span>개</td>
+        <td><span id="data_2_2"></span>원</td>
+      </tr>
+      <tr>
+        <td class="tableHead" rowspan="2"><span style="color: #5098ff;">향균</span> 그린매트</td>
+        <td colspan="2">약 2mm</td>
+        <!-- PVC 비닐만 구매 -->
+        <td style="border: 6px solid red;
+        border-top: none;
+        border-bottom: 1px solid;"><span id="data_3_1"></span>개</td>
+        <td><span id="data_3_2"></span>원</td>
+      </tr>
+      <tr>
+        <td colspan="2">약 3mm</td>
+        <!-- PVC 비닐만 구매 -->
+        <td style="border: 6px solid red;
+        border-top: 1px solid;text-align: right;"><span id="data_4_1"></span>개</td>
+        <td><span id="data_4_2"></span>원</td>
+      </tr>
+    </table>
+    <div
+      style="position: relative; display:flex; justify-content:center; margin:30px auto; padding:10px 20px; max-width: 1000px; background-color: #fff; border-radius: 5px;">
+      <div>
+        <h2 style="font-weight: bold; ">* 자동견적기 사용방법</h2>
+        <h3>• 자동견적기에 사이즈 입력 후 나온 구매수량을 입력하면 주문 끝</h3>
+        <h3>ex) 120 x 140 = 37개 (옵션선택창에 37개로 수량을 맞춰주세요)</h3>
+        <h3>• 구매수량이 여러개일 경우 각 수량을 총 합하여 주문</h3>
+        <h3>ex) 120 x 140 2장 필요시</h3>
+        <h3>구매수량 37개 x 2장 = 74개 주문</h3>
+        <h3>(배송메모란에 정확한 사이즈 필수 입력. 미입력시 1장으로 합산되어 제작)</h3>
+        <h3>• 원형일 경우 가로와 세로를 같은 값으로 입력</h3>
+      </div>
+      <div class="pointWrap">
+        <h3>point</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62px" height="62px">
+          <image x="0px" y="0px" width="62px" height="62px"
+            xlink:href="data:img/png;base64,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" />
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+
+</html>
